@@ -208,15 +208,17 @@ function! s:FindComment(linenum)
 
   while cur != end
     call cursor(0, cur + 1)
-    let [_, cur] = searchpos('#', 'cn', a:linenum)
+    let [_, column] = searchpos('#', 'cn', a:linenum)
 
-    if !cur
+    if !column
       break
     endif
 
-    if s:IsComment(a:linenum, cur)
-      return cur
+    if s:IsComment(a:linenum, column)
+      return column
     endif
+
+    let cur = cur + 1
   endwhile
 
   return 0
